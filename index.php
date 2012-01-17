@@ -7,11 +7,11 @@
         <!--
 	<link rel="stylesheet" type="text/css" href="style/global.style.css" />
 	-->
-	<link href='http://fonts.googleapis.com/css?family=Noticia+Text' rel='stylesheet' type='text/css'>
 	<style type="text/css">
 	body {
 		display: -webkit-box;
 		-webkit-box-pack: center;
+		background-color:#000;
 	}
 	a {
 		display:block;
@@ -25,10 +25,10 @@
 		margin:10px;
 		padding:10px 10px 16px 10px;
 
-		color:#000;
-		font-family: 'Noticia Text', serif;
+		font-family: sans-serif;
 		text-decoration:none;
 		text-align:center;
+		color:#888;
 
 		font-size:10px;
 		overflow:hidden;
@@ -37,27 +37,22 @@
 		-moz-border-radius: 6px; /* FF1-3.6 */
 		border-radius: 6px; /* Opera 10.5, IE9, Saf5, Chrome, FF4, iOS 4, Android 2.1+ */
 
-		-webkit-box-shadow: 0px 1px 8px #ccc; /* Saf3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
-		-moz-box-shadow: 0px 1px 8px #ccc; /* FF3.5 - 3.6 */
-		box-shadow: 0px 1px 8px #ccc; /* Opera 10.5, IE9, FF4+, Chrome 6+, iOS 5 */
+		-webkit-box-shadow: 0px 1px 8px #fff; /* Saf3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+		-moz-box-shadow: 0px 1px 8px #fff; /* FF3.5 - 3.6 */
+		box-shadow: 0px 1px 8px #fff; /* Opera 10.5, IE9, FF4+, Chrome 6+, iOS 5 */
 	
-		background-size:contain;
-		background-position:center;
-		background-repeat:no-repeat;
-		background-origin: content-box;
-	
-
-		xbackground-image: -webkit-gradient(linear, left top, left bottom, from(#444444), to(#999999)); /* Saf4+, Chrome */
-		xbackground-image: -webkit-linear-gradient(top, #444444, #999999); /* Chrome 10+, Saf5.1+, iOS 5+ */
-		xbackground-image:    -moz-linear-gradient(top, #444444, #999999); /* FF3.6 */
-		xbackground-image:         linear-gradient(top, #444444, #999999);
-		
+		background-size:contain, cover;
+		background-position:center, center;
+		background-repeat:no-repeat, repeat;
+		background-origin: content-box, padding-box;
 
 	}
 
 	a:hover {
-		text-shadow: rgba(64, 64, 64, 0.5) 2px 2px 8px;
-		background-color:#ccc;
+		-webkit-box-shadow: 0px 1px 16px #fff; /* Saf3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+		-moz-box-shadow: 0px 1px 16px #fff; /* FF3.5 - 3.6 */
+		box-shadow: 0px 1px 16px #fff; /* Opera 10.5, IE9, FF4+, Chrome 6+, iOS 5 */
+		color:#fff;
 	}
 
 	span {
@@ -67,18 +62,23 @@
 		margin-left:-10px;
 		width:170px;
 
-		background-color:#ccc;
+		background-color: rgba(10, 10, 10, 0.5);
 		-webkit-border-radius: 0 0 6px 6px; /* Saf3-4, iOS 1-3.2, Android <e;1.6 */
 		-moz-border-radius: 0 0 6px 6px; /* FF1-3.6 */
 		border-radius: 0 0 6px 6px; /* Opera 10.5, IE9, Saf5, Chrome, FF4, iOS 4, Android 2.1+ */
 
-	
+		text-shadow: rgba(64, 64, 64, 0.5) 2px 2px 8px;
 	}
-
-	<?php foreach($t_links as $k => $v) {
+	<?php
+	$bg_gradient = "-webkit-linear-gradient(top, #444444, #999999)";
+	$bg_gradient_hover = "-webkit-linear-gradient(top, #999, #444)";
+ 
+	foreach($t_links as $k => $v) {
 		$id = strtolower($k); 
-		echo "#$id {background-image:url(img/$id.png)}\n";
-	} ?>
+		echo "#$id {background-image:url(img/$id.png), $bg_gradient}\n";
+		echo "#$id:hover {background-image:url(img/$id.png), $bg_gradient_hover}\n";
+	}
+	?>
 	</style>
     </head>
     <body>
