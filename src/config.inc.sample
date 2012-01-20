@@ -1,0 +1,10 @@
+<?php
+
+$server = "server.domain.tld"; // EDIT_ME
+
+$t_links = array(
+	"SabNzbd" => "https://$server:9090", // https version
+	"couchpotato" => "http://$server:5000",
+	"SickBeard" => "http://$server:8081",
+	"HeadPhones" => "http://$server:8181",
+);
