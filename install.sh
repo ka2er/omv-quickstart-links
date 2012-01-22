@@ -36,6 +36,9 @@ chown -R sabnzbd:users SABnzbd-$sabnzbd_version
 chown -R sabnzbd:users /var/lib/SABnzbd/
 chown -R sabnzbd:users /var/log/SABnzbd/
 chown -R sabnzbd:users /var/run/SABnzbd/
+chown sabnzbd:users /etc/SABnzbd.ini
+touch /etc/SABnzbd.ini.bak
+chown sabnzbd:users /etc/SABnzbd.ini.bak
 	
 chmod 755 /etc/init.d/SABnzbd
 update-rc.d SABnzbd defaults
