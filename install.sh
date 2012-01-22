@@ -31,7 +31,11 @@ cat $script_path/templates/init_script.sh | sed -e s/__service__/SABnzbd/g \
 	-e s#root#sabnzbd# \
 	-e s#__args__#-d\ -f\ /etc/SABnzbd.ini\ --pid\ /var/run/SABnzbd# > /etc/init.d/SABnzbd
 
-chown -R sabnzbd SABnzbd
+chown -R sabnzbd:users SABnzbd
+chown -R sabnzbd:users SABnzbd-$sabnzbd_version
+chown -R sabnzbd:users /var/lib/SABnzbd/
+chown -R sabnzbd:users /var/log/SABnzbd/
+chown -R sabnzbd:users /var/run/SABnzbd/
 	
 chmod 755 /etc/init.d/SABnzbd
 update-rc.d SABnzbd defaults
@@ -49,7 +53,7 @@ cat SickBeard/init.ubuntu | sed -e s/SICKBEARD_USER/sickbeard/ \
 	-e s#~/.sickbeard#/var/lib/sickbeard# > /etc/init.d/sickbeard	
 cp SickBeard/autoProcessTV/sabToSickBeard.py SABnzbd/post-process/
 
-chown -R sickbeard SickBeard
+chown -R sickbeard:users SickBeard
 
 chmod 755 /etc/init.d/sickbeard
 update-rc.d sickbeard defaults
@@ -74,7 +78,7 @@ cat couchpotato/default.ubuntu | sed -e s#/opt#$install_dir# \
 	-e s#CONFIG=#CONFIG=/etc/couchpotato# \
 	-e s#DATADIR=#DATADIR=/var/lib/couchpotato# > /etc/default/couchpotato
 
-chown -R couchpotato couchpotato
+chown -R couchpotato:users couchpotato
 
 chmod 755 /etc/init.d/couchpotato
 update-rc.d couchpotato defaults
@@ -97,6 +101,8 @@ cat headphones/init.ubuntu | sed -e s/application\ instance// \
 	-e s/root/headphones/ \
 	-e s#Headphones.py\ -q#Headphones.py\ -q\ --datadir\ /var/lib/headphones\ --config\ /etc/headphones# \
 	> /etc/init.d/headphones
+
+chown -R headphones:users headphones
 
 chmod 755 /etc/init.d/headphones
 update-rc.d headphones defaults
