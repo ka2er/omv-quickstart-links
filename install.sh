@@ -30,6 +30,8 @@ cat $script_path/templates/init_script.sh | sed -e s/__service__/SABnzbd/g \
 	-e s#__root__#$install_dir# \
 	-e s#root#sabnzbd# \
 	-e s#__args__#-d\ -f\ /etc/SABnzbd.ini\ --pid\ /var/run/SABnzbd# > /etc/init.d/SABnzbd
+
+chown -R sabnzbd SABnzbd
 	
 chmod 755 /etc/init.d/SABnzbd
 update-rc.d SABnzbd defaults
@@ -46,6 +48,8 @@ cat SickBeard/init.ubuntu | sed -e s/SICKBEARD_USER/sickbeard/ \
 	-e s#PATH_TO_SICKBEARD_DIRECTORY#$install_dir/SickBeard# \
 	-e s#~/.sickbeard#/var/lib/sickbeard# > /etc/init.d/sickbeard	
 cp SickBeard/autoProcessTV/sabToSickBeard.py SABnzbd/post-process/
+
+chown -R sickbeard SickBeard
 
 chmod 755 /etc/init.d/sickbeard
 update-rc.d sickbeard defaults
@@ -69,6 +73,9 @@ cat couchpotato/default.ubuntu | sed -e s#/opt#$install_dir# \
 	-e s/RUN_AS=/RUN_AS=couchpotato/ \
 	-e s#CONFIG=#CONFIG=/etc/couchpotato# \
 	-e s#DATADIR=#DATADIR=/var/lib/couchpotato# > /etc/default/couchpotato
+
+chown -R couchpotato couchpotato
+
 chmod 755 /etc/init.d/couchpotato
 update-rc.d couchpotato defaults
 
