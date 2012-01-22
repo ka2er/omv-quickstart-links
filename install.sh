@@ -22,6 +22,9 @@ rm download
 ln -sf SABnzbd-$sabnzbd_version SABnzbd
 
 mkdir -p /var/run/SABnzbd/
+mkdir -p /var/log/SABnzbd/
+mkdir -p /var/lib/SABnzbd/
+
 cat $script_path/templates/init_script.sh | sed -e s/__service__/SABnzbd/g \
 	-e s#__root__#$install_dir# \
 	-e s#__args__#-d\ -f\ /etc/SABnzbd.ini\ --pid\ /var/run/SABnzbd# > /etc/init.d/SABnzbd
@@ -40,6 +43,8 @@ useradd -M -N -s /bin/false sickbeard
 cat SickBeard/init.ubuntu | sed -e s/SICKBEARD_USER/sickbeard/ \
 	-e s#PATH_TO_SICKBEARD_DIRECTORY#$install_dir/SickBeard# \
 	-e s#~/.sickbeard#/var/lib/sickbeard# > /etc/init.d/sickbeard	
+cp SickBeard/autoProcessTV/sabToSickBeard.py SABnzbd/post-process/
+
 chmod 755 /etc/init.d/sickbeard
 update-rc.d sickbeard defaults
 
