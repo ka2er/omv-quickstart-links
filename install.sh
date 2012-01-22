@@ -25,8 +25,10 @@ mkdir -p /var/run/SABnzbd/
 mkdir -p /var/log/SABnzbd/
 mkdir -p /var/lib/SABnzbd/
 
+useradd -M -N -s /bin/false sabnzbd
 cat $script_path/templates/init_script.sh | sed -e s/__service__/SABnzbd/g \
 	-e s#__root__#$install_dir# \
+	-e s#root#sabnzbd# \
 	-e s#__args__#-d\ -f\ /etc/SABnzbd.ini\ --pid\ /var/run/SABnzbd# > /etc/init.d/SABnzbd
 	
 chmod 755 /etc/init.d/SABnzbd
