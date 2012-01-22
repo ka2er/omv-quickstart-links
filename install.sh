@@ -24,21 +24,22 @@ ln -sf SABnzbd-$sabnzbd_version SABnzbd
 mkdir -p /var/run/SABnzbd/
 mkdir -p /var/log/SABnzbd/
 mkdir -p /var/lib/SABnzbd/
+mkdir -p /etc/sabnzbd/
 
 useradd -M -N -s /bin/false sabnzbd
 cat $script_path/templates/init_script.sh | sed -e s/__service__/SABnzbd/g \
 	-e s#__root__#$install_dir# \
 	-e s#root#sabnzbd# \
-	-e s#__args__#-d\ -f\ /etc/SABnzbd.ini\ --pid\ /var/run/SABnzbd# > /etc/init.d/SABnzbd
+	-e s#__args__#-d\ -f\ /etc/sabnzbd/sabnzbd.ini\ --pid\ /var/run/SABnzbd# > /etc/init.d/SABnzbd
 
 chown -R sabnzbd:users SABnzbd
 chown -R sabnzbd:users SABnzbd-$sabnzbd_version
 chown -R sabnzbd:users /var/lib/SABnzbd/
 chown -R sabnzbd:users /var/log/SABnzbd/
 chown -R sabnzbd:users /var/run/SABnzbd/
-chown sabnzbd:users /etc/SABnzbd.ini
-touch /etc/SABnzbd.ini.bak
-chown sabnzbd:users /etc/SABnzbd.ini.bak
+chown sabnzbd:users /etc/sabnzbd/sabnzbd.ini
+chown sabnzbd:users /etc/sabnzbd
+chmod 755 /etc/sabnzbd
 	
 chmod 755 /etc/init.d/SABnzbd
 update-rc.d SABnzbd defaults
