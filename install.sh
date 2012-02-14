@@ -116,3 +116,6 @@ update-rc.d headphones defaults
 a2enmod redirect
 #touch /etc/apache2/conf.d/redirect +redirect RULES
 echo "Listen 80" >> /etc/apache2/ports.conf
+
+# unison is a must have for file synchronisation
+apt-get install unison
