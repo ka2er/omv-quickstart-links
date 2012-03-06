@@ -55,7 +55,10 @@ useradd -M -N -s /bin/false sickbeard
 cat SickBeard/init.ubuntu | sed -e s/SICKBEARD_USER/sickbeard/ \
 	-e s#PATH_TO_SICKBEARD_DIRECTORY#$install_dir/SickBeard# \
 	-e s#~/.sickbeard#/var/lib/sickbeard# > /etc/init.d/sickbeard	
+
 cp SickBeard/autoProcessTV/sabToSickBeard.py SABnzbd/post-process/
+cp SickBeard/autoProcessTV/autoProcessTV.py SABnzbd/post-process/
+chown -R sabnzbd:users SABnzbd/post-process/
 
 chown -R sickbeard:users SickBeard
 
