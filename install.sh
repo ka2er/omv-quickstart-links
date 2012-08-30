@@ -58,6 +58,7 @@ cat SickBeard/init.ubuntu | sed -e s/SICKBEARD_USER/sickbeard/ \
 
 cp SickBeard/autoProcessTV/sabToSickBeard.py SABnzbd/post-process/
 cp SickBeard/autoProcessTV/autoProcessTV.py SABnzbd/post-process/
+cp SickBeard/autoProcessTV/autoProcessTV.cfg.sample SABnzbd/post-process/autoProcessTV.cfg
 chown -R sabnzbd:users SABnzbd/post-process/
 
 chown -R sickbeard:users SickBeard
