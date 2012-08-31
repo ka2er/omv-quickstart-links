@@ -12,7 +12,7 @@ apt-get install zsh vim sysstats htops
 
 
 # sabnzbdplus
-sabnzbd_version="0.6.14"
+sabnzbd_version="0.7.3"
 
 apt-get install python python-cheetah python-configobj python-feedparser python-support par2 python-openssl python-yenc unzip unrar python-dbus
 
@@ -25,6 +25,10 @@ mkdir -p /var/run/SABnzbd/
 mkdir -p /var/log/SABnzbd/
 mkdir -p /var/lib/SABnzbd/
 mkdir -p /etc/sabnzbd/
+# keep only french templates
+mkdir SABnzbd/email/others
+mv SABnzbd/email/*tmpl SABnzbd/email/others
+mv SABnzbd/email/others/*-fr.tmpl SABnzbd/email
 
 useradd -M -N -s /bin/false sabnzbd
 cat $script_path/templates/init_script.sh | sed -e s/__service__/SABnzbd/g \
