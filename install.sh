@@ -119,6 +119,17 @@ chown -R headphones:users headphones
 chmod 755 /etc/init.d/headphones
 update-rc.d headphones defaults
 
+# shellinabox - ssh
+sudo apt-get install build-essential fakeroot devscripts debhelper autotools-dev libssl-dev libpam0g-dev zlib1g-dev 
+
+wget http://shellinabox.googlecode.com/files/shellinabox-2.14.tar.gz
+tar xzvf shellinabox-2.14.tar.gz
+cd shellinabox-2.14
+
+dpkg-buildpackage -b
+cd ..
+sudo dpkg -i shellinabox*deb
+rm shellinabox*deb
 
 # apache redirect
 a2enmod redirect
