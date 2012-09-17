@@ -131,6 +131,19 @@ cd ..
 sudo dpkg -i shellinabox*deb
 rm shellinabox*deb
 
+
+## ampache
+echo "deb http://www.deb-multimedia.org squeeze main non-free" >> /etc/apt-sources.list
+apt-get update
+apt-get install deb-multimedia-keyring
+apt-get update
+apt-get install lame mp3splt flac
+
+## fichier de conf ampache
+#/usr/share/ampache/www/config/ampache.cfg.php
+#transcode_flac  = true
+
+
 # apache redirect
 a2enmod redirect
 #touch /etc/apache2/conf.d/redirect +redirect RULES
