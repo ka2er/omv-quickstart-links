@@ -70,6 +70,35 @@ chown -R sickbeard:users SickBeard
 chmod 755 /etc/init.d/sickbeard
 update-rc.d sickbeard defaults
 
+# subtitle auto
+# check out periscope :
+apt-get install subversion
+svn checkout http://periscope.googlecode.com/svn/trunk/ periscope
+# prepare python for install:
+apt-get install python-setuptools python-beautifulsoup
+cd periscope
+#install periscope
+python setup.py install
+
+cd ../
+echo <<EOF > SickBeard/searchSubs.sh
+#!/bin/sh
+echo Filename to process. $1
+echo Original filename... $2
+echo Show TVDB id........ $3
+echo Season number....... $4
+echo Episode number...... $5
+echo Episode air date.... $6
+echo ... will now pass the search info to periscope to snatch a subtitle
+/usr/local/bin/periscope "$1" -l fr -l en --force
+EOF
+
+chmod 755 SickBeard/searchSubs.sh
+chown sickbeard:nogroup SickBeard/searchSubs.sh
+
+echo "Please add to sickbeard/confi.ini extrascript to searchSubs.sh"
+
+
 
 # couchpotato - film
 wget https://github.com/RuudBurger/CouchPotato/tarball/master --no-check-certificate
@@ -118,6 +147,13 @@ chown -R headphones:users headphones
 
 chmod 755 /etc/init.d/headphones
 update-rc.d headphones defaults
+
+# beets - music organizer
+apt-get install python-dev python-setuptools python-pip
+pip install flask
+pip install beets
+
+
 
 # shellinabox - ssh
 sudo apt-get install build-essential fakeroot devscripts debhelper autotools-dev libssl-dev libpam0g-dev zlib1g-dev 
