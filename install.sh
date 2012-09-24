@@ -1,6 +1,11 @@
 #!/bin/bash
 
+# 
 install_dir="EDIT_ME"
+
+# series directory
+tv_dir="EDIT_ME"
+
 
 mkdir -p $install_dir
 
@@ -99,6 +104,22 @@ chown sickbeard:nogroup SickBeard/searchSubs.sh
 echo "Please add to sickbeard/confi.ini extrascript to searchSubs.sh"
 
 
+# subliminal - a fork of periscope
+#
+apt-get install git-core python-pip
+apt-get install libxml2-dev libxslt1-dev 
+pip install beautifulsoup4 guessit requests enzyme html5lib lxml
+git clone https://github.com/Diaoul/subliminal.git
+cd subliminal
+python setup.py install
+
+
+# install cron
+USER_ORIG=`logname`
+crontab -u $USER_ORIG -l > /tmp/crontab.tmp
+echo "0 1 * * * /usr/local/bin/subliminal -l en -l fr $tv_dir" >> /tmp/crontab.tmp
+crontab -u $USER_ORIG /tmp/crontab.tmp
+rm /tmp/crontab.tmp
 
 # couchpotato - film
 wget https://github.com/RuudBurger/CouchPotato/tarball/master --no-check-certificate
