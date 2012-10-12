@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MYDOMAIN="EDIT_ME"  #ex: domain.fr
 # 
 install_dir="EDIT_ME"
 
@@ -186,7 +187,7 @@ rm shellinabox*deb
 
 
 ## ampache
-echo "deb http://www.deb-multimedia.org squeeze main non-free" >> /etc/apt-sources.list
+echo "deb http://www.deb-multimedia.org squeeze main non-free" >> /etc/apt/sources.list
 apt-get update
 apt-get install deb-multimedia-keyring
 apt-get update
@@ -196,11 +197,23 @@ apt-get install lame mp3splt flac
 #/usr/share/ampache/www/config/ampache.cfg.php
 #transcode_flac  = true
 
-
-# apache redirect
-a2enmod redirect
-#touch /etc/apache2/conf.d/redirect +redirect RULES
-echo "Listen 80" >> /etc/apache2/ports.conf
-
 # unison is a must have for file synchronisation
 apt-get install unison
+
+# nginx
+apt-get instal nginx
+
+
+cat $script_path/templates/nzb | sed -e s/DOMAIN/$MYDOMAIN/ > /etc/nginx/sites-available/nzb
+ln -sf /etc/nginx/sites-available/nzb /etc/nginx/sites-enabled/nzb
+# TODO fastcgiparam + generation certificats
+
+
+# TODO PHP
+
+# mod apache ports
+cat /etc/apache2/sites-available/openmediavault-webgui | sed -e s/80/8000/ > /etc/apache2/sites-available/openmediavault-webgui.tmp
+mv /etc/apache2/sites-available/openmediavault-webgui.tmp /etc/apache2/sites-available/openmediavault-webgui
+
+cat /etc/apache2/ports.conf | sed -e s/80/8000/ > /etc/apache2/ports.conf.tmp
+mv /etc/apache2/ports.conf.tmp /etc/apache2/ports.conf
