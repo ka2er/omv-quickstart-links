@@ -64,19 +64,19 @@ update-rc.d SABnzbd defaults
 
 # sickbeard - series
 git clone git://github.com/midgetspy/Sick-Beard.git
-mv Sick-Beard SickBeard
+mv Sick-Beard sickbeard
 
 useradd -M -N -s /bin/false sickbeard
-cat SickBeard/init.ubuntu | sed -e s/SICKBEARD_USER/sickbeard/ \
+cat sickbeard/init.ubuntu | sed -e s/SICKBEARD_USER/sickbeard/ \
 	-e s#PATH_TO_SICKBEARD_DIRECTORY#$install_dir/SickBeard# \
 	-e s#~/.sickbeard#/var/lib/sickbeard# > /etc/init.d/sickbeard	
 
-cp SickBeard/autoProcessTV/sabToSickBeard.py SABnzbd/post-process/
-cp SickBeard/autoProcessTV/autoProcessTV.py SABnzbd/post-process/
-cp SickBeard/autoProcessTV/autoProcessTV.cfg.sample SABnzbd/post-process/autoProcessTV.cfg
+cp sickbeard/autoProcessTV/sabToSickBeard.py SABnzbd/post-process/
+cp sickbeard/autoProcessTV/autoProcessTV.py SABnzbd/post-process/
+cp sickbeard/autoProcessTV/autoProcessTV.cfg.sample SABnzbd/post-process/autoProcessTV.cfg
 chown -R sabnzbd:users SABnzbd/post-process/
 
-chown -R sickbeard:users SickBeard
+chown -R sickbeard:users sickbeard
 
 chmod 755 /etc/init.d/sickbeard
 update-rc.d sickbeard defaults
