@@ -12,16 +12,21 @@ mkdir -p $install_dir
 script_path=$PWD
 cd $install_dir
 
+# add backports
+echo "deb http://backports.debian.org/debian-backports squeeze-backports main" >> /etc/apt/sources.list
+apt-get update
+
 # utils
-apt-get install zsh vim sysstats htops
+apt-get install less zsh vim sysstat htop
 
 
 # sabnzbdplus
-sabnzbd_version="0.7.3"
+sabnzbd_version="0.7.4"
 
-apt-get install python python-cheetah python-configobj python-feedparser python-support par2 python-openssl python-yenc unzip unrar python-dbus
+apt-get install python python-cheetah python-configobj python-feedparser python-support par2 python-openssl python-yenc unzip unrar-free python-dbus
 
-wget http://sourceforge.net/projects/sabnzbdplus/files/sabnzbdplus/sabnzbd-$sabnzbd_version/SABnzbd-$sabnzbd_version-src.tar.gz/download
+wget http://sourceforge.net/projects/sabnzbdplus/files/sabnzbdplus/$sabnzbd_version/SABnzbd-$sabnzbd_version-src.tar.gz/download
+
 tar xzvf download
 rm download
 ln -sf SABnzbd-$sabnzbd_version SABnzbd
@@ -30,10 +35,13 @@ mkdir -p /var/run/SABnzbd/
 mkdir -p /var/log/SABnzbd/
 mkdir -p /var/lib/SABnzbd/
 mkdir -p /etc/sabnzbd/
+touch /etc/sabnzbd/sabnzbd.ini
+
 # keep only french templates
 mkdir SABnzbd/email/others
 mv SABnzbd/email/*tmpl SABnzbd/email/others
 mv SABnzbd/email/others/*-fr.tmpl SABnzbd/email
+mkdir SABnzbd/post-process
 
 useradd -M -N -s /bin/false sabnzbd
 cat $script_path/templates/init_script.sh | sed -e s/__service__/SABnzbd/g \
@@ -55,10 +63,8 @@ update-rc.d SABnzbd defaults
 
 
 # sickbeard - series
-wget https://github.com/midgetspy/Sick-Beard/tarball/master --no-check-certificate
-tar xzf master
-mv midge* SickBeard
-rm master
+git clone git://github.com/midgetspy/Sick-Beard.git
+mv Sick-Beard SickBeard
 
 useradd -M -N -s /bin/false sickbeard
 cat SickBeard/init.ubuntu | sed -e s/SICKBEARD_USER/sickbeard/ \
@@ -77,42 +83,41 @@ update-rc.d sickbeard defaults
 
 # subtitle auto
 # check out periscope :
-apt-get install subversion
-svn checkout http://periscope.googlecode.com/svn/trunk/ periscope
+#apt-get install subversion
+#svn checkout http://periscope.googlecode.com/svn/trunk/ periscope
 # prepare python for install:
-apt-get install python-setuptools python-beautifulsoup
-cd periscope
+#apt-get install python-setuptools python-beautifulsoup
+#cd periscope
 #install periscope
-python setup.py install
+#python setup.py install
 
-cd ../
-echo <<EOF > SickBeard/searchSubs.sh
+#cd ../
+#echo <<EOF > SickBeard/searchSubs.sh
 #!/bin/sh
-echo Filename to process. $1
-echo Original filename... $2
-echo Show TVDB id........ $3
-echo Season number....... $4
-echo Episode number...... $5
-echo Episode air date.... $6
-echo ... will now pass the search info to periscope to snatch a subtitle
-/usr/local/bin/periscope "$1" -l fr -l en --force
-EOF
+#echo Filename to process. $1
+#echo Original filename... $2
+#echo Show TVDB id........ $3
+#echo Season number....... $4
+#echo Episode number...... $5
+#echo Episode air date.... $6
+#echo ... will now pass the search info to periscope to snatch a subtitle
+#/usr/local/bin/periscope "$1" -l fr -l en --force
+#EOF
 
-chmod 755 SickBeard/searchSubs.sh
-chown sickbeard:nogroup SickBeard/searchSubs.sh
+#chmod 755 SickBeard/searchSubs.sh
+#chown sickbeard:nogroup SickBeard/searchSubs.sh
 
-echo "Please add to sickbeard/confi.ini extrascript to searchSubs.sh"
+#echo "Please add to sickbeard/confi.ini extrascript to searchSubs.sh"
 
 
 # subliminal - a fork of periscope
 #
-apt-get install git-core python-pip
-apt-get install libxml2-dev libxslt1-dev 
+apt-get install git-core python-pip libxml2-dev libxslt1-dev 
 pip install beautifulsoup4 guessit requests enzyme html5lib lxml
 git clone https://github.com/Diaoul/subliminal.git
 cd subliminal
 python setup.py install
-
+cd ../
 
 # install cron
 USER_ORIG=`logname`
@@ -122,10 +127,8 @@ crontab -u $USER_ORIG /tmp/crontab.tmp
 rm /tmp/crontab.tmp
 
 # couchpotato - film
-wget https://github.com/RuudBurger/CouchPotato/tarball/master --no-check-certificate
-tar xzf master
-mv Ruu* couchpotato
-rm master
+git clone git://github.com/RuudBurger/CouchPotatoServer.git
+mv CouchPotatoServer couchpotato
 
 useradd -M -N -s /bin/false couchpotato
 mkdir -p /var/lib/couchpotato
@@ -133,12 +136,9 @@ chown couchpotato /var/lib/couchpotato
 touch /etc/couchpotato
 chown couchpotato /etc/couchpotato
 
-cp couchpotato/initd.ubuntu /etc/init.d/couchpotato
-cat couchpotato/default.ubuntu | sed -e s#/opt#$install_dir# \
-	-e s/=0/=1/ \
-	-e s/RUN_AS=/RUN_AS=couchpotato/ \
-	-e s#CONFIG=#CONFIG=/etc/couchpotato# \
-	-e s#DATADIR=#DATADIR=/var/lib/couchpotato# > /etc/default/couchpotato
+cat couchpotato/init/ubuntu | sed -e s#/usr/local/sbin/CouchPotatoServer/#$install_dir/couchpotato/# \
+	-e s/YOUR_USERNAME_HERE/couchpotato/ \
+	-e s#--daemon#--daemon\ --config_file=/etc/couchpotato\ --data_dir=/var/lib/couchpotato# > /etc/init.d/couchpotato
 
 chown -R couchpotato:users couchpotato
 
@@ -147,10 +147,7 @@ update-rc.d couchpotato defaults
 
 
 # headphones - musique
-wget https://github.com/rembo10/headphones/tarball/master --no-check-certificate
-tar xzf master
-mv rem* headphones
-rm master
+git clone git://github.com/rembo10/headphones.git headphones
 
 useradd -M -N -s /bin/false headphones
 mkdir -p /var/lib/headphones
@@ -173,8 +170,6 @@ update-rc.d headphones defaults
 apt-get install python-dev python-setuptools python-pip
 pip install flask
 pip install beets
-
-
 
 # shellinabox - ssh
 sudo apt-get install build-essential fakeroot devscripts debhelper autotools-dev libssl-dev libpam0g-dev zlib1g-dev 
