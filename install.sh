@@ -70,7 +70,13 @@ mv Sick-Beard sickbeard
 useradd -M -N -s /bin/false sickbeard
 cp sickbeard/init.ubuntu /etc/init.d/sickbeard
 
-echo "SB_OPTS='--config=/etc/sickbeard' --port=8081" > /etc/default/sickbeard
+echo "SB_OPTS='--config=/etc/sickbeard/config.ini --port=8081'" > /etc/default/sickbeard
+
+mkdir /etc/sickbeard/
+touch /etc/sickbeard/config.ini
+chmod 666 /etc/sickbeard/config.ini
+chmod 777 /etc/sickbeard/
+
 
 cp sickbeard/autoProcessTV/sabToSickBeard.py SABnzbd/post-process/
 cp sickbeard/autoProcessTV/autoProcessTV.py SABnzbd/post-process/
@@ -149,6 +155,9 @@ update-rc.d couchpotato defaults
 
 
 # headphones - musique
+# 
+# utiliser ffmpeg pour encoder les flac egalement
+#
 git clone git://github.com/rembo10/headphones.git headphones
 
 useradd -M -N -s /bin/false headphones
@@ -191,11 +200,25 @@ echo "deb http://www.deb-multimedia.org squeeze main non-free" >> /etc/apt/sourc
 apt-get update
 apt-get install deb-multimedia-keyring
 apt-get update
-apt-get install lame mp3splt flac
+apt-get install lame mp3splt flac ffmpeg
 
 ## fichier de conf ampache
 #/usr/share/ampache/www/config/ampache.cfg.php
 #transcode_flac  = true
+# TODO ampache 
+
+# greyhole : many disk only one share
+apt-get install cifs-utils
+wget https://raw.github.com/gist/1099419/mount_shares_locally
+cat mount_shares_locally | sed -e s/your\ username/$USER_ORIG/ > /etc/init.d/mount_shares_locally
+rm mount_shares_locally
+chmod +x /etc/init.d/mount_shares_locally
+
+echo "username=your_username\n
+password=your_password\n
+domain=HOME" > /home/$USER_ORIG/.smb_credentials
+
+update-rc.d mount_shares_locally defaults
 
 # unison is a must have for file synchronisation
 apt-get install unison
