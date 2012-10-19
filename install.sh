@@ -18,7 +18,7 @@ echo "deb http://backports.debian.org/debian-backports squeeze-backports main" >
 apt-get update
 
 # utils
-apt-get install less zsh vim sysstat htop
+apt-get install less zsh vim sysstat htop curl
 
 
 # sabnzbdplus
@@ -133,6 +133,8 @@ crontab -u $USER_ORIG -l > /tmp/crontab.tmp
 echo "0 1 * * * /usr/local/bin/subliminal -l en -l fr $tv_dir" >> /tmp/crontab.tmp
 crontab -u $USER_ORIG /tmp/crontab.tmp
 rm /tmp/crontab.tmp
+su $USER_ORIG -c "mkdir -p /home/$USER_ORIG/.config/subliminal/"
+
 
 # couchpotato - film
 git clone git://github.com/RuudBurger/CouchPotatoServer.git
@@ -157,6 +159,7 @@ update-rc.d couchpotato defaults
 # headphones - musique
 # 
 # utiliser ffmpeg pour encoder les flac egalement
+# dans fichier config folder_ermissions=775
 #
 git clone git://github.com/rembo10/headphones.git headphones
 
