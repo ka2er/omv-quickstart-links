@@ -183,6 +183,7 @@ update-rc.d headphones defaults
 # beets - music organizer
 apt-get install python-dev python-setuptools python-pip
 pip install flask
+pip install pylast
 pip install beets
 
 # shellinabox - ssh
