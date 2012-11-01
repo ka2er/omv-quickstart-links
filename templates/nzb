@@ -96,23 +96,14 @@ server {
 }
 
 server {
-	listen   80;
-	#ssl	on;
+	listen   443;
+	ssl	on;
 	server_name  music.DOMAIN;
  	
-	root /usr/share/ampache/www;
- 
-        location / {
-                index index.php index.html index.htm;
+	location / {
+                proxy_pass http://localhost:4040;
         }
- 
-        location ~ \.php$ {
-		try_files $uri =404;
- 		# fast cgi support
-    		include /etc/nginx/fastcgi_params;
-            	fastcgi_pass unix:/tmp/php.socket;
-        }
-}
+ }
 
 server {
 	listen 443;
