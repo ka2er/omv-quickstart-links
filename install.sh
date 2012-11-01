@@ -186,6 +186,12 @@ pip install flask
 pip install pylast
 pip install beets
 
+# subsonic
+apt-get install openjdk-6-jre
+wget http://prdownloads.sourceforge.net/subsonic/subsonic-4.7.deb
+dpkg -i subsonic-4.7.deb
+rm subsonic-4.7.deb
+
 # shellinabox - ssh
 sudo apt-get install build-essential fakeroot devscripts debhelper autotools-dev libssl-dev libpam0g-dev zlib1g-dev 
 
