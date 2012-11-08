@@ -181,7 +181,7 @@ chmod 755 /etc/init.d/headphones
 update-rc.d headphones defaults
 
 # beets - music organizer
-apt-get install python-dev python-setuptools python-pip
+apt-get install python-dev python-setuptools python-pip imagemagick
 pip install flask
 pip install pylast
 pip install beets
