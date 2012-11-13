@@ -192,6 +192,13 @@ wget http://prdownloads.sourceforge.net/subsonic/subsonic-4.7.deb
 dpkg -i subsonic-4.7.deb
 rm subsonic-4.7.deb
 
+# automatic cover rename to folder.jpg
+crontab -u $USER_ORIG -l > /tmp/crontab.tmp
+echo "@daily bash -c 'while IFS= read -r img; do DIR=`dirname \"$img\"`; mv \"$img\" \"$DIR/folder.jpg\"; done < <(find /mnt/samba/son -iname \*jpg | grep -v folder.jpg)'" >> /tmp/crontab.tmp
+crontab -u $USER_ORIG /tmp/crontab.tmp
+rm /tmp/crontab.tmp
+
+
 # shellinabox - ssh
 sudo apt-get install build-essential fakeroot devscripts debhelper autotools-dev libssl-dev libpam0g-dev zlib1g-dev 
 
