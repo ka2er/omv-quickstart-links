@@ -18,7 +18,7 @@ echo "deb http://backports.debian.org/debian-backports squeeze-backports main" >
 apt-get update
 
 # utils
-apt-get install less zsh vim sysstat htop curl
+apt-get install less zsh vim sysstat htop curl locate
 
 
 # sabnzbdplus
