@@ -260,3 +260,10 @@ mv /etc/apache2/sites-available/openmediavault-webgui.tmp /etc/apache2/sites-ava
 
 cat /etc/apache2/ports.conf | sed -e s/80/8000/ > /etc/apache2/ports.conf.tmp
 mv /etc/apache2/ports.conf.tmp /etc/apache2/ports.conf
+
+
+## omv extrq plugins
+wget -O omvplugin.deb 'http://packages.omv-plugins.org/pool/main/o/openmediavault-omvpluginsorg/openmediavault-omvpluginsorg_0.4~10.gbp5bae63_all.deb'
+dpkg -i omvplugin.deb
+rm omvplugin.deb
+
