@@ -243,11 +243,14 @@ apt-get install unison
 # nginx
 apt-get install nginx
 
-
 cat $script_path/templates/nzb | sed -e s/DOMAIN/$MYDOMAIN/ > /etc/nginx/sites-available/nzb
 ln -sf /etc/nginx/sites-available/nzb /etc/nginx/sites-enabled/nzb
-# TODO fastcgiparam + generation certificats
+# TODO fastcgiparam
 
+# SSL certs
+apt-get install ssl-cert
+mkdir -p /etc/nginx/conf
+make-ssl-cert /usr/share/ssl-cert/ssleay.cnf /etc/nginx/conf/ssl.pem
 
 # TODO PHP
 

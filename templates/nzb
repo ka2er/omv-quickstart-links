@@ -2,8 +2,8 @@
 # HTTPS server
 #
 
-ssl_certificate /etc/nginx/conf/server.crt;
-ssl_certificate_key /etc/nginx/conf/server.key;
+ssl_certificate /etc/nginx/conf/ssl.pem;
+ssl_certificate_key /etc/nginx/conf/ssl.pem;
 
 # redirect http => https
 server {
