@@ -14,6 +14,7 @@ script_path=$PWD
 cd $install_dir
 
 # add backports
+echo "deb http://ftp.fr.debian.org/debian/ squeeze main non-free" >> /etc/apt/sources.list
 echo "deb http://backports.debian.org/debian-backports squeeze-backports main" >> /etc/apt/sources.list
 apt-get update
 
@@ -24,7 +25,7 @@ apt-get install less zsh vim sysstat htop curl locate
 # sabnzbdplus
 sabnzbd_version="0.7.10"
 
-apt-get install python python-cheetah python-configobj python-feedparser python-support par2 python-openssl python-yenc unzip unrar-free python-dbus
+apt-get install python python-cheetah python-configobj python-feedparser python-support par2 python-openssl python-yenc unzip unrar python-dbus
 
 wget http://sourceforge.net/projects/sabnzbdplus/files/sabnzbdplus/$sabnzbd_version/SABnzbd-$sabnzbd_version-src.tar.gz/download
 
