@@ -22,7 +22,7 @@ apt-get install less zsh vim sysstat htop curl
 
 
 # sabnzbdplus
-sabnzbd_version="0.7.4"
+sabnzbd_version="0.7.10"
 
 apt-get install python python-cheetah python-configobj python-feedparser python-support par2 python-openssl python-yenc unzip unrar-free python-dbus
 
@@ -58,7 +58,7 @@ chown -R sabnzbd:users /var/run/SABnzbd/
 chown sabnzbd:users /etc/sabnzbd/sabnzbd.ini
 chown sabnzbd:users /etc/sabnzbd
 chmod 755 /etc/sabnzbd
-	
+
 chmod 755 /etc/init.d/SABnzbd
 update-rc.d SABnzbd defaults
 
@@ -120,7 +120,7 @@ update-rc.d sickbeard defaults
 
 # subliminal - a fork of periscope
 #
-apt-get install git-core python-pip libxml2-dev libxslt1-dev 
+apt-get install git-core python-pip libxml2-dev libxslt1-dev gcc python-dev
 pip install beautifulsoup4 guessit requests enzyme html5lib lxml
 git clone https://github.com/Diaoul/subliminal.git
 cd subliminal
@@ -181,7 +181,7 @@ chmod 755 /etc/init.d/headphones
 update-rc.d headphones defaults
 
 # beets - music organizer
-apt-get install python-dev python-setuptools python-pip imagemagick
+apt-get install python-dev python-setuptools python-pip imagemagick python-yaml
 pip install flask
 pip install pylast
 pip install beets
@@ -226,7 +226,7 @@ apt-get install lame mp3splt flac ffmpeg
 
 # greyhole : many disk only one share
 apt-get install cifs-utils
-wget https://raw.github.com/gist/1099419/mount_shares_locally
+wget --no-check-certificate https://raw.github.com/gist/1099419/mount_shares_locally
 cat mount_shares_locally | sed -e s/your\ username/$USER_ORIG/ > /etc/init.d/mount_shares_locally
 rm mount_shares_locally
 chmod +x /etc/init.d/mount_shares_locally
@@ -241,7 +241,7 @@ update-rc.d mount_shares_locally defaults
 apt-get install unison
 
 # nginx
-apt-get instal nginx
+apt-get install nginx
 
 
 cat $script_path/templates/nzb | sed -e s/DOMAIN/$MYDOMAIN/ > /etc/nginx/sites-available/nzb
