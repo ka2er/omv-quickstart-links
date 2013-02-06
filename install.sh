@@ -7,6 +7,8 @@ install_dir="EDIT_ME"
 # series directory
 tv_dir="EDIT_ME"
 
+# backup_dir
+backup_dir="EDIT_ME"
 
 mkdir -p $install_dir
 
@@ -275,4 +277,16 @@ mv /etc/apache2/ports.conf.tmp /etc/apache2/ports.conf
 wget -O omvplugin.deb 'http://packages.omv-plugins.org/pool/main/o/openmediavault-omvpluginsorg/openmediavault-omvpluginsorg_0.4~10.gbp5bae63_all.deb'
 dpkg -i omvplugin.deb
 rm omvplugin.deb
+
+# install a server config cron backup
+mkdir -p $backup_dir
+chgrp users $backup_dir
+chmod 775 $backup_dir
+cd $script_path
+crontab -u $USER_ORIG -l > /tmp/crontab.tmp
+echo "0 1 * * * cd $backup_dir && /opt/bin/save-conf.sh >> /tmp/crontab.tmp
+crontab -u $USER_ORIG /tmp/crontab.tmp
+rm /tmp/crontab.tmp
+
+
 
