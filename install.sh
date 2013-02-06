@@ -188,10 +188,18 @@ pip install pylast
 pip install beets
 
 # subsonic
+useradd -M -N -s /bin/false subsonic
+
 apt-get install openjdk-6-jre
 wget http://prdownloads.sourceforge.net/subsonic/subsonic-4.7.deb
 dpkg -i subsonic-4.7.deb
 rm subsonic-4.7.deb
+
+cat /etc/default/subsonic | sed -e s/=root/=subsonic/ > /etc/default/subsonic.tmp
+mv /etc/default/subsonic.tmp /etc/default/subsonic
+
+
+
 
 # automatic cover rename to folder.jpg
 crontab -u $USER_ORIG -l > /tmp/crontab.tmp
