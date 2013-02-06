@@ -256,6 +256,9 @@ apt-get install nginx
 
 cat $script_path/templates/nzb | sed -e s/DOMAIN/$MYDOMAIN/ > /etc/nginx/sites-available/nzb
 ln -sf /etc/nginx/sites-available/nzb /etc/nginx/sites-enabled/nzb
+cp $script_path/templates/maxupload.conf /etC/nginx/conf.d/
+
+
 # TODO fastcgiparam
 
 # SSL certs
