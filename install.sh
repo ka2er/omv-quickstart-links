@@ -187,6 +187,7 @@ update-rc.d headphones defaults
 apt-get install python-dev python-setuptools python-pip imagemagick python-yaml
 pip install flask
 pip install pylast
+pip install pyechonest
 pip install beets
 
 # subsonic
