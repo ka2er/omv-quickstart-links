@@ -191,18 +191,30 @@ pip install pyechonest
 pip install beets
 
 # subsonic
-useradd -M -N -s /bin/false subsonic
+useradd -M -N -s /bin/false supersonic
 
-apt-get install openjdk-6-jre
-wget http://prdownloads.sourceforge.net/subsonic/subsonic-4.7.deb
-dpkg -i subsonic-4.7.deb
-rm subsonic-4.7.deb
-
-cat /etc/default/subsonic | sed -e s/=root/=subsonic/ > /etc/default/subsonic.tmp
-mv /etc/default/subsonic.tmp /etc/default/subsonic
+apt-get install openjdk-6-jre maven2 openjdk-6-jdk lintian default-jre-headless
 
 
+git clone http://github.com/Mach5/supersonic.git
+cd supersonic
 
+mvn -P full -pl subsonic-booter -am install 
+mvn -P full -pl subsonic-main -am install 
+mvn -P full -pl subsonic-installer-debian -am install
+
+dpkg -i subsonic-installer-debian/target/supersonic-4.7.beta1.deb
+
+#wget http://prdownloads.sourceforge.net/subsonic/subsonic-4.7.deb
+#dpkg -i subsonic-4.7.deb
+#rm subsonic-4.7.deb
+
+#cat /etc/default/subsonic | sed -e s/=root/=subsonic/ > /etc/default/subsonic.tmp
+#mv /etc/default/subsonic.tmp /etc/default/subsonic
+
+cat /etc/default/supersonic | sed -e s/=root/=supersonic/ > /etc/default/supersonic.tmp
+mv /etc/default/supersonic.tmp /etc/default/supersonic
+cd ../
 
 # automatic cover rename to folder.jpg
 crontab -u $USER_ORIG -l > /tmp/crontab.tmp
