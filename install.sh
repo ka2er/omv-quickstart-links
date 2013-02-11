@@ -306,3 +306,5 @@ rm /tmp/crontab.tmp
 
 
 
+---------------------------
+Please Edit /opt/SABnzbd/post-process/autoProcessTV.cfg
