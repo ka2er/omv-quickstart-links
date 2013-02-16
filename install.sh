@@ -304,7 +304,18 @@ echo "0 1 * * * cd $backup_dir && /opt/bin/save-conf.sh >> /tmp/crontab.tmp
 crontab -u $USER_ORIG /tmp/crontab.tmp
 rm /tmp/crontab.tmp
 
+### rar crack
+wget http://downloads.sourceforge.net/project/rarcrack/rarcrack-0.2/%5BUnnamed%20release%5D/rarcrack-0.2.tar.bz2
+tar -xjf rarcrack-0.2.tar.bz2
+cd rarcrack-0.2
+apt-get install libxml2-dev
+make
 
+cp rarcrack /usr/local/bin
+cd ../
+rm -rf rarcrack-0.2*
 
 ---------------------------
 Please Edit /opt/SABnzbd/post-process/autoProcessTV.cfg
+
+
