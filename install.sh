@@ -251,7 +251,7 @@ apt-get install lame mp3splt flac ffmpeg
 # greyhole : many disk only one share
 apt-get install cifs-utils
 wget --no-check-certificate https://raw.github.com/gist/1099419/mount_shares_locally
-cat mount_shares_locally | sed -e s/your\ username/$USER_ORIG/ -e s/0660/0666/ -e s/0770/0777/ > /etc/init.d/mount_shares_locally
+cat mount_shares_locally | sed -e s/your\ username/$USER_ORIG/ -e s/0660/0666/ -e s/0770/0777/ -e s/${gid}/100/ > /etc/init.d/mount_shares_locally
 rm mount_shares_locally
 chmod +x /etc/init.d/mount_shares_locally
 
