@@ -16,6 +16,9 @@ tar xzvf download
 rm download
 mkdir SABnzbd-$sabnzbd_version/post-process
 mv $TMP_BACKUP/* SABnzbd-$sabnzbd_version/post-process/
+mkdir SABnzbd-$sabnzbd_version/email/others
+mv SABnzbd-$sabnzbd_version/email/*tmpl SABnzbd-$sabnzbd_version/email/others
+mv SABnzbd-$sabnzbd_version/email/others/*-fr.tmpl SABnzbd-$sabnzbd_version/email
 rm /opt/SABnzbd
 ln -sf /opt/SABnzbd-$sabnzbd_version /opt/SABnzbd
 chown -R sabnzbd:users SABnzbd
