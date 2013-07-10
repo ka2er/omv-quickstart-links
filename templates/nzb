@@ -137,13 +137,3 @@ server {
 	}
 }
 
-
-server {
-	listen   443;
-	ssl	on;
-	server_name  cloud.DOMAIN;
- 	
-        location / {
-               proxy_pass http://localhost:8888/;
-        }
-}
